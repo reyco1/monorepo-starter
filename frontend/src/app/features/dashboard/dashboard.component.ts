@@ -17,12 +17,12 @@ import { CalculatorService } from '../../core/services/calculator.service';
             <div class="flex items-center">
               <h1 class="text-xl font-semibold text-white">Calculator Dashboard</h1>
             </div>
-            <div class="flex items-center space-x-4">
-              <div class="flex items-center space-x-3" *ngIf="authService.user$ | async as user">
+            <div class="flex items-center">
+              <div class="flex items-center mr-4" *ngIf="authService.user$ | async as user">
                 <img 
                   [src]="user.photoURL" 
                   [alt]="user.displayName + ' avatar'"
-                  class="w-8 h-8 rounded-full object-cover border-2 border-blue-400"
+                  class="w-8 h-8 rounded-full object-cover border-2 border-blue-400 mr-3"
                 >
                 <span class="text-gray-200">{{ user.displayName }}</span>
               </div>
