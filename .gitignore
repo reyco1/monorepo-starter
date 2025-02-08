@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.angular/
+
+# Firebase
+.firebase/
+*.log
+
+# ignore node_modules from the backend
+backend/node_modules/
+
+# ignore node_modules from the frontend
+frontend/node_modules/
+
+# ignore dist from the frontend
+frontend/dist
+
+# ignore dist from the backend
+backend/dist
+
+# backend nestjs environment files
+backend/.env
+!backend/.env.example
+
+# frontend angular environment files
+frontend/src/environments/environment.ts
+frontend/src/environments/environment.prod.ts
+
+# serviceAccount.json
+backend/serviceAccount.json

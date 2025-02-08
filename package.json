@@ -1,0 +1,16 @@
+{
+  "name": "fullstack-monorepo",
+  "version": "1.0.0",
+  "description": "Fullstack monorepo with NestJS and Angular",
+  "scripts": {
+    "dev": "concurrently \"cd frontend && ng serve\" \"cd backend && npm run start:dev\"",
+    "build": "cd frontend && ng build --configuration production && cd ../backend && rm -rf dist && npm run build",
+    "deploy": "npm run build && firebase deploy",
+    "check-paths": "./.debug/check-paths.sh",
+    "emulate": "npm run clean && npm run build && npm run check-paths && firebase emulators:start",
+    "clean": "rm -rf frontend/dist frontend/.angular backend/dist"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
