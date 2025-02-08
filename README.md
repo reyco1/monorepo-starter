@@ -1,4 +1,12 @@
-# Fullstack Monorepo (NestJS + Angular)
+# Fullstack Monorepo
+
+<div align="center">
+  <img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="Angular Logo" width="120"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://nestjs.com/img/logo-small.svg" alt="NestJS Logo" width="120"/>
+</div>
+
+<br/>
 
 This monorepo contains a modern fullstack application built with NestJS (backend) and Angular (frontend). The project uses Firebase for deployment and follows a clean architecture pattern.
 
@@ -8,6 +16,7 @@ This monorepo contains a modern fullstack application built with NestJS (backend
 monorepo/
 ├── backend/          # NestJS backend application
 ├── frontend/         # Angular frontend application
+├── .debug/           # Debug utilities
 ├── firebase.json     # Firebase configuration
 └── setup-monorepo.sh # Setup script for the monorepo
 ```
@@ -23,8 +32,8 @@ monorepo/
 - Unit and E2E testing setup
 
 ### Frontend (Angular)
-- Built with latest Angular
-- TailwindCSS for styling
+- Built with latest Angular (v19)
+- TailwindCSS v4.0 for styling
 - TypeScript support
 - Responsive design
 - Modern development setup with hot reload
@@ -47,86 +56,82 @@ cd fullstack-monorepo
 
 2. **Install dependencies**
 ```bash
+# Install root dependencies
 npm install
+
+# Install frontend dependencies
 cd frontend && npm install
+
+# Install backend dependencies
 cd ../backend && npm install
 ```
 
-3. **Development**
+## 📜 Available Scripts
+
+### Root Directory Scripts
 ```bash
 # Run both frontend and backend in development mode
 npm run dev
 
-# Frontend only (http://localhost:4200)
-cd frontend && ng serve
-
-# Backend only (http://localhost:3000)
-cd backend && npm run start:dev
-```
-
-## 🏭 Build
-
-```bash
-# Build both frontend and backend
+# Build both frontend and backend for production
 npm run build
 
-# Frontend only
-cd frontend && ng build
+# Deploy to Firebase
+npm run deploy
 
-# Backend only
-cd backend && npm run build
+# Clean build artifacts
+npm run clean
+
+# Run Firebase emulators
+npm run emulate
+
+# Check deployment paths
+npm run check-paths
+```
+
+### Frontend (http://localhost:4200)
+```bash
+cd frontend
+ng serve          # Start development server
+ng build          # Build for production
+ng test           # Run unit tests
+```
+
+### Backend (http://localhost:3000)
+```bash
+cd backend
+npm run start:dev # Start development server
+npm run build     # Build for production
+npm run test      # Run unit tests
+npm run test:e2e  # Run end-to-end tests
 ```
 
 ## 🚀 Deployment
 
-The project is configured for Firebase deployment:
+The project is configured for Firebase deployment. To deploy both frontend and backend:
 
 ```bash
 npm run deploy
 ```
 
-## 🧪 Testing
+This command will:
+1. Build both frontend and backend applications
+2. Deploy the built applications to Firebase
 
-### Frontend
+## 🧪 Local Development with Firebase
+
+To test the application with Firebase emulators:
+
 ```bash
-cd frontend
-ng test        # Run unit tests
-ng e2e         # Run end-to-end tests
+npm run emulate
 ```
 
-### Backend
-```bash
-cd backend
-npm run test        # Run unit tests
-npm run test:e2e    # Run end-to-end tests
-```
+This will:
+1. Clean previous builds
+2. Build both applications
+3. Check deployment paths
+4. Start Firebase emulators
 
-## 🔧 Available Scripts
+## 📝 License
 
-- `npm run dev`: Start both frontend and backend in development mode
-- `npm run build`: Build both frontend and backend for production
-- `npm run deploy`: Deploy the application to Firebase
-- `npm run emulate`: Run Firebase emulators
-- `npm run clean`: Clean build directories
-- `npm run check-paths`: Verify deployment paths
-
-## 📝 Environment Configuration
-
-1. Backend: Create a `.env` file in the `backend` directory
-2. Frontend: Environment files are located in `frontend/src/environments/`
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details
-
-## 👥 Support
-
-For support, please open an issue in the repository or contact the maintainers.
+This project is licensed under the MIT License - see the LICENSE file for details.
