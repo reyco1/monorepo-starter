@@ -2,15 +2,55 @@
   "name": "fullstack-monorepo",
   "version": "1.0.0",
   "description": "Fullstack monorepo with NestJS and Angular",
+  "author": "Reynaldo Columna",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "dev": "concurrently \"cd frontend && ng serve\" \"cd backend && npm run start:dev\"",
     "build": "cd frontend && ng build --configuration production && cd ../backend && rm -rf dist && npm run build",
     "deploy": "npm run build && firebase deploy",
     "check-paths": "./.debug/check-paths.sh",
     "emulate": "npm run clean && npm run build && npm run check-paths && firebase emulators:start",
-    "clean": "rm -rf frontend/dist frontend/.angular backend/dist"
+    "clean": "rm -rf frontend/dist frontend/.angular backend/dist",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "test:all": "cd frontend && ng test && cd ../backend && npm run test",
+    "lint:all": "cd frontend && ng lint && cd ../backend && npm run lint",
+    "start:frontend": "cd frontend && ng serve",
+    "start:backend": "cd backend && npm run start:dev",
+    "build:frontend": "cd frontend && ng build --configuration production",
+    "build:backend": "cd backend && npm run build",
+    "deploy:functions": "npm run build:backend && firebase deploy --only functions",
+    "deploy:hosting": "npm run build:frontend && firebase deploy --only hosting",
+    "firebase:login": "firebase login",
+    "firebase:init": "firebase init",
+    "update:deps": "npm update && cd frontend && npm update && cd ../backend && npm update"
   },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reyco1/monorepo-starter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/reyco1/monorepo-starter/issues"
+  },
+  "keywords": [
+    "angular",
+    "nestjs",
+    "firebase",
+    "monorepo",
+    "typescript",
+    "tailwindcss"
+  ],
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.0",
+    "firebase-tools": "^13.0.2",
+    "rimraf": "^5.0.5"
   }
 }

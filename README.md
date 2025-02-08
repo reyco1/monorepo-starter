@@ -41,46 +41,110 @@ monorepo/
 
 ## 🛠️ Prerequisites
 
-- Node.js (LTS version)
-- npm or yarn
+- Node.js (v20.0.0 or higher)
+- npm (v10.0.0 or higher)
 - Angular CLI
 - Firebase CLI (for deployment)
+
+## 🔥 Firebase Setup
+
+1. **Install Firebase CLI** (if not already installed)
+```bash
+npm run firebase:login
+```
+
+2. **Login to Firebase**
+```bash
+npm run firebase:login
+```
+
+3. **Initialize Firebase Project** (if starting from scratch)
+```bash
+npm run firebase:init
+```
+Select the following options:
+- Functions: Configure a Cloud Functions directory and its files
+- Hosting: Configure files for Firebase Hosting
+- Use an existing project or create a new one
+- Select `backend/dist` as your functions directory
+- Select `frontend/dist/browser` as your hosting directory
+- Configure as a single-page app: Yes
+- Set up automatic builds and deploys with GitHub: No
+
+4. **Environment Setup**
+```bash
+# Backend: Create .env file in backend directory
+cp backend/.env.example backend/.env
+
+# Frontend: Update environment files
+# Edit these files with your Firebase config:
+frontend/src/environments/environment.ts
+frontend/src/environments/environment.prod.ts
+```
 
 ## 🚦 Getting Started
 
 1. **Clone the repository**
 ```bash
-git clone <repository-url>
+git clone https://github.com/reyco1/monorepo-starter.git
 cd fullstack-monorepo
 ```
 
-2. **Install dependencies**
+2. **Install all dependencies**
 ```bash
-# Install root dependencies
-npm install
-
-# Install frontend dependencies
-cd frontend && npm install
-
-# Install backend dependencies
-cd ../backend && npm install
+npm run install:all
 ```
 
 ## 📜 Available Scripts
 
 ### Root Directory Scripts
+
+#### Development
 ```bash
 # Run both frontend and backend in development mode
 npm run dev
 
-# Build both frontend and backend for production
+# Start frontend only
+npm run start:frontend  # Runs on http://localhost:4200
+
+# Start backend only
+npm run start:backend   # Runs on http://localhost:3000
+```
+
+#### Building
+```bash
+# Build both projects for production
 npm run build
 
-# Deploy to Firebase
-npm run deploy
+# Build frontend only
+npm run build:frontend
+
+# Build backend only
+npm run build:backend
 
 # Clean build artifacts
 npm run clean
+```
+
+#### Testing and Linting
+```bash
+# Run all tests
+npm run test:all
+
+# Run all linting
+npm run lint:all
+```
+
+#### Deployment
+```bash
+# Deploy everything
+npm run deploy
+
+# Deploy only backend functions
+npm run deploy:functions
+
+# Deploy only frontend hosting
+npm run deploy:hosting
 
 # Run Firebase emulators
 npm run emulate
@@ -89,34 +153,62 @@ npm run emulate
 npm run check-paths
 ```
 
-### Frontend (http://localhost:4200)
+#### Maintenance
 ```bash
-cd frontend
-ng serve          # Start development server
-ng build          # Build for production
-ng test           # Run unit tests
-```
+# Update dependencies across all projects
+npm run update:deps
 
-### Backend (http://localhost:3000)
-```bash
-cd backend
-npm run start:dev # Start development server
-npm run build     # Build for production
-npm run test      # Run unit tests
-npm run test:e2e  # Run end-to-end tests
+# Install dependencies for all projects
+npm run install:all
 ```
 
 ## 🚀 Deployment
 
-The project is configured for Firebase deployment. To deploy both frontend and backend:
+The project is configured for Firebase deployment with the following setup:
+- Frontend is served via Firebase Hosting at `frontend/dist/browser`
+- Backend is deployed as Firebase Functions at `backend/dist`
+- API requests (`/api/**`) are automatically routed to the backend
+- All other routes are handled by the Angular application
 
+### Deploy to Firebase
+
+1. **Build and Deploy Everything**
 ```bash
 npm run deploy
 ```
 
-This command will:
-1. Build both frontend and backend applications
-2. Deploy the built applications to Firebase
+2. **Selective Deployment**
+```bash
+# Deploy only backend functions
+npm run deploy:functions
+
+# Deploy only frontend hosting
+npm run deploy:hosting
+```
+
+### Firebase Configuration
+The `firebase.json` configuration includes:
+```json
+{
+  "functions": {
+    "source": "backend/dist",
+    "runtime": "nodejs20"
+  },
+  "hosting": {
+    "public": "frontend/dist/browser",
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "function": "api"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
+```
 
 ## 🧪 Local Development with Firebase
 
@@ -131,6 +223,15 @@ This will:
 2. Build both applications
 3. Check deployment paths
 4. Start Firebase emulators
+   - Functions emulator on port 5001
+   - Hosting emulator on port 8080
+
+## 📦 Dependencies
+
+This project uses npm workspaces to manage the monorepo structure. Key dependencies include:
+- `concurrently`: Run multiple commands concurrently
+- `firebase-tools`: Firebase CLI for deployment and emulation
+- `rimraf`: Cross-platform solution for recursive directory cleanup
 
 ## 📝 License
 
