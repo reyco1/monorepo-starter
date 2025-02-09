@@ -82,6 +82,29 @@ frontend/src/environments/environment.ts
 frontend/src/environments/environment.prod.ts
 ```
 
+5. **Environment Configuration**
+- For the frontend, refer to `environment.example.ts` for a basic structure:
+  ```typescript
+  // frontend/src/environments/environment.example.ts
+  export const environment = {
+    production: false,
+    apiUrl: 'http://localhost:3000/api/v1',
+    firebaseConfig: {
+      // Your Firebase configuration here
+    }
+  };
+  ```
+- In `environment.ts` (development), use the full URL including `localhost:3000`:
+  ```typescript
+  apiUrl: 'http://localhost:3000/api/v1'
+  ```
+- In `environment.prod.ts`, use a relative URL:
+  ```typescript
+  apiUrl: '/api/v1'
+  ```
+- Update both files with your specific Firebase configuration.
+
+
 ## 🚦 Getting Started
 
 1. **Clone the repository**
