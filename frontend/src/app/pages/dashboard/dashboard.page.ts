@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
-import { CalculatorComponent } from '../calculator/calculator.component';
+import { CalculatorComponent } from '../../features/calculator/calculator.component';
 import { NavBarComponent } from '../../shared/components/nav-bar/nav-bar.component';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-dashboard-page',
   standalone: true,
   imports: [CommonModule, CalculatorComponent, NavBarComponent],
   template: `
@@ -24,7 +24,7 @@ import { NavBarComponent } from '../../shared/components/nav-bar/nav-bar.compone
   `,
   styles: []
 })
-export class DashboardComponent {
+export class DashboardPage {
   protected authService = inject(AuthService);
 
   async signOut(): Promise<void> {

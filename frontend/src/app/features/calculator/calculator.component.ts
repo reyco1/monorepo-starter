@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CalcButtonComponent } from './components/calc-button/calc-button.component';
 import { CalculatorService } from '../../core/services/calculator.service';
+import { firstValueFrom } from 'rxjs';
 
 interface CalcButton {
   label: string;
@@ -191,8 +192,8 @@ export class CalculatorComponent {
     try {
       this.error = '';
       this.loading = true;
-      const result = await this.calculatorService.calculate(this.display);
-      this.display = result.toString();
+      const response = await firstValueFrom(this.calculatorService.calculate(this.display));
+      this.display = response.result.toString();
     } catch (err) {
       this.error = err instanceof Error ? err.message : 'An error occurred';
     } finally {
