@@ -153,7 +153,7 @@ import { CalculatorService } from '../../core/services/calculator.service';
               0
             </button>
             <button 
-              (click)="appendNumber('.')" 
+              (click)="appendDecimal()" 
               class="p-4 text-xl font-medium rounded-xl text-white bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 focus:ring-offset-gray-800 transition-colors duration-200"
             >
               .
@@ -179,41 +179,71 @@ export class DashboardComponent {
   protected authService = inject(AuthService);
   private calculatorService = inject(CalculatorService);
 
-  display = '';
+  display = '0';
   error = '';
   loading = false;
+  readonly MAX_LENGTH = 16;
 
   appendNumber(num: string): void {
     this.error = '';
-    this.display += num;
+    if (this.display.length >= this.MAX_LENGTH) return;
+    
+    if (this.display === '0') {
+      this.display = num;
+    } else {
+      this.display += num;
+    }
   }
 
   appendOperator(operator: string): void {
     this.error = '';
-    if (this.display && !this.isOperator(this.display[this.display.length - 1])) {
+    const lastChar = this.display[this.display.length - 1];
+    
+    if (operator === '-' && this.display === '0') {
+      this.display = '-';
+      return;
+    }
+
+    if (this.isOperator(lastChar)) {
+      this.display = this.display.slice(0, -1) + operator;
+    } else {
       this.display += operator;
     }
   }
 
+  appendDecimal(): void {
+    const currentNumber = this.display.split(/[-+*/]/).pop() || '';
+    if (!currentNumber.includes('.')) {
+      this.display += '.';
+    }
+  }
+
   clear(): void {
-    this.display = '';
+    this.display = '0';
     this.error = '';
   }
 
-  calculate(): void {
-    if (!this.display) return;
+  private formatNumber(num: number): string {
+    return num.toString().length > this.MAX_LENGTH 
+      ? num.toPrecision(this.MAX_LENGTH) 
+      : num.toString();
+  }
 
+  calculate(): void {
+    if (this.display === '0') return;
+    
     this.loading = true;
     this.error = '';
-
+    
     this.calculatorService.calculate(this.display).subscribe({
       next: (result) => {
-        this.display = result.result.toString();
+        this.display = this.formatNumber(result.result);
         this.loading = false;
       },
       error: (error) => {
         this.error = error.error?.message || 'An error occurred';
         this.loading = false;
+        this.display = '0';
       }
     });
   }
