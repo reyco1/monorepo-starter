@@ -1,6 +1,6 @@
 {
   "name": "fullstack-monorepo",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "Fullstack monorepo with NestJS and Angular",
   "author": "Reynaldo Columna",
   "private": true,

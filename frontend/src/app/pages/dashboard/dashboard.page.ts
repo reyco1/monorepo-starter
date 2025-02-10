@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
-import { CalculatorComponent } from '../../features/calculator/calculator.component';
+import { CalculatorComponent } from '../../shared/components/calculator/calculator.component';
 import { NavBarComponent } from '../../shared/components/nav-bar/nav-bar.component';
 
 @Component({

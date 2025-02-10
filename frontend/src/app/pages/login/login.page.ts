@@ -17,7 +17,7 @@ import { AuthService } from '../../core/services/auth.service';
             class="w-full bg-white text-gray-900 px-4 py-3 rounded-lg font-medium flex items-center justify-center hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-800"
           >
             <img
-              src="assets/google-logo.svg"
+              src="assets/google.png"
               alt="Google logo"
               class="w-6 h-6 mr-3"
             />

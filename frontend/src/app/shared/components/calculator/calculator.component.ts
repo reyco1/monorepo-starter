@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CalcButtonComponent } from './components/calc-button/calc-button.component';
-import { CalculatorService } from '../../core/services/calculator.service';
+import { CalculatorService } from '../../../core/services/calculator.service';
 import { firstValueFrom } from 'rxjs';
 
 interface CalcButton {
